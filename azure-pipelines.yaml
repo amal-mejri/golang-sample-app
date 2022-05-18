@@ -41,7 +41,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     contents: '_buildOutput/**'
-    ArtifactStagingDirectory: '/home/amalmejri/agnet/workspace/1/a'
+    ArtifactStagingDirectory: '/home/amalmejri/agnet/workspace/5/a'
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
