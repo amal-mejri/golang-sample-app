@@ -42,7 +42,8 @@ steps:
   inputs:
     TargetFolder: '$(System.DefaultWorkingDirectory)/out'
 
-- task: PublishBuildArtifacts@1
+- task: PublishPipelineArtifact@0
+  displayName: 'Publish pipeline artifact'
   inputs:
-    ArtifactName: 'drop'
-    pathToPublish: $(Build.ArtifactStagingDirectory/out)
+    artifactName: 'drop'
+    targetPath: '$(Build.ArtifactStagingDirectory)'
