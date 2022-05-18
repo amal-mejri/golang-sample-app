@@ -45,3 +45,4 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     ArtifactName: 'drop'
+    pathToPublish: $(Build.ArtifactStagingDirectory/out)
