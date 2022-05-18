@@ -31,9 +31,19 @@ steps:
   displayName: 'Build App'
   inputs:
     command: 'build'
-    arguments: '-o go-sample-app'
+    arguments: '-o out/go-sample-app'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: CmdLine@2
   inputs:
     scripts: ls -la
     workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '_buildOutput/**'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: MyBuildOutputs
