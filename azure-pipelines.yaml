@@ -6,24 +6,29 @@ pool:
 
 steps: 
 - task: GoTool@0
+  displayName: 'Set GoLang version'
   inputs:
     version: '1.18.2'
 - task: Go@0
+  displayName: 'Install Go'
   inputs:
     command: 'get'
     arguments: '-d'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: Go@0
+  displayName: 'Install dependency'
   inputs:
     command: 'mod'
     arguments: 'download'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: Go@0
+  displayName: 'Run Tests'
   inputs:
     command: 'test'
     arguments: '-v'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: Go@0
+  displayName: 'Build App'
   inputs:
     command: 'build'
     arguments: '-o go-sample-app'
@@ -31,3 +36,4 @@ steps:
 - task: CmdLine@2
   inputs:
     scripts: ls -la
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
