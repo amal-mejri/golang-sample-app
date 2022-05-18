@@ -47,3 +47,16 @@ steps:
   inputs:
     artifactName: 'drop'
     targetPath: '$(Build.ArtifactStagingDirectory)'
+
+
+jobs:
+- deployment: VMDeploy
+  displayName: Deploy to VM
+  environment: 
+    name: ContosoDeploy
+    resourceType: VirtualMachine
+  strategy:
+    runOnce:
+      deploy:   
+          steps:
+          - script: echo "Hello world"
