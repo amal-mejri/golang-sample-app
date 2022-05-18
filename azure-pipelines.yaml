@@ -5,9 +5,6 @@ pool:
    name: 'cgi-ado-agents-small'
 
 steps: 
-- task: CmdLine@2
-  inputs:
-    scripts: apt install gcc -y
 - task: GoTool@0
   inputs:
     version: '1.18.2'
