@@ -60,9 +60,12 @@ jobs:
     resourceType: VirtualMachine
     tags: web
   strategy:
-    runOnce:
-      deploy:
-        steps:
-        - script: echo my first deployment
+    rolling:
+        maxParallel: 2  #for percentages, mention as x%
+        preDeploy:
+          steps:
+          - download: current
+            artifact: drop
+          - script: echo initialize, cleanup, backup, install certs
   
 
