@@ -67,5 +67,8 @@ jobs:
           - download: current
             artifact: drop
           - script: echo initialize, cleanup, backup, install certs
-  
+        deploy:
+          steps:
+          - script: 'this is step one in deploy'
+          
 
