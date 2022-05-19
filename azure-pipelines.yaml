@@ -51,5 +51,11 @@ jobs:
     inputs:
       artifactName: 'drop'
       targetPath: '$(Build.ArtifactStagingDirectory)'
-
+ 
+- deployment: VMDeploy
+  displayName: web
+  environment:
+    name:  CgiVm
+    resourceType: VirtualMachine
+    tags: web
 
