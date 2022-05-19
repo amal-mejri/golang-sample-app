@@ -6,59 +6,50 @@ pool:
 
 
 jobs:
-- deployment: VMDeploy
-  displayName: Deploy to VM
-  environment: 
-    name: ContosoDeploy
-    resourceType: VirtualMachine
-  strategy:
-    runOnce:
-      deploy:   
-          steps:
-          - script: echo "Hello world"
+- job: Build
+  displayName: build and test stage
+  steps: 
+  - task: GoTool@0
+    displayName: 'Set GoLang version'
+    inputs:
+      version: '1.18.2'
+  - task: Go@0
+    displayName: 'Install Go'
+    inputs:
+      command: 'get'
+      arguments: '-d'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    displayName: 'Install dependency'
+    inputs:
+      command: 'mod'
+      arguments: 'download'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    displayName: 'Run Tests'
+    inputs:
+      command: 'test'
+      arguments: '-v'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    displayName: 'Build App'
+    inputs:
+      command: 'build'
+      arguments: '-o out/go-sample-app'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: CmdLine@2
+    inputs:
+      scripts: ls -la
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-steps: 
-- task: GoTool@0
-  displayName: 'Set GoLang version'
-  inputs:
-    version: '1.18.2'
-- task: Go@0
-  displayName: 'Install Go'
-  inputs:
-    command: 'get'
-    arguments: '-d'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
-- task: Go@0
-  displayName: 'Install dependency'
-  inputs:
-    command: 'mod'
-    arguments: 'download'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
-- task: Go@0
-  displayName: 'Run Tests'
-  inputs:
-    command: 'test'
-    arguments: '-v'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
-- task: Go@0
-  displayName: 'Build App'
-  inputs:
-    command: 'build'
-    arguments: '-o out/go-sample-app'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
-- task: CmdLine@2
-  inputs:
-    scripts: ls -la
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: CopyFiles@2
+    inputs:
+      TargetFolder: '$(System.DefaultWorkingDirectory)/out'
 
-- task: CopyFiles@2
-  inputs:
-    TargetFolder: '$(System.DefaultWorkingDirectory)/out'
-
-- task: PublishPipelineArtifact@0
-  displayName: 'Publish pipeline artifact'
-  inputs:
-    artifactName: 'drop'
-    targetPath: '$(Build.ArtifactStagingDirectory)'
+  - task: PublishPipelineArtifact@0
+    displayName: 'Publish pipeline artifact'
+    inputs:
+      artifactName: 'drop'
+      targetPath: '$(Build.ArtifactStagingDirectory)'
 
 
