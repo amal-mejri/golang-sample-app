@@ -41,7 +41,11 @@ jobs:
     inputs:
       scripts: ls -la
       workingDirectory: '$(System.DefaultWorkingDirectory)'
-
+  
+  - task: CopyFiles@2
+    inputs:
+      contents: '_buildOutput/**'
+      targetFolder: $(Build.ArtifactStagingDirectory)
 
   - task: PublishPipelineArtifact@1
     displayName: 'Publish pipeline artifact'
