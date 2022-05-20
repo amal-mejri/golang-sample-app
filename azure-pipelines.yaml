@@ -46,11 +46,12 @@ jobs:
     inputs:
       TargetFolder: '$(System.DefaultWorkingDirectory)/out'
 
-  - task: PublishPipelineArtifact@0
+  - task: PublishPipelineArtifact@1
     displayName: 'Publish pipeline artifact'
     inputs:
       artifactName: 'drop'
       targetPath: '$(Build.ArtifactStagingDirectory)'
+      publishLocation: 'Container'
  
 
 
