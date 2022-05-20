@@ -51,7 +51,7 @@ jobs:
     inputs:
       artifactName: 'drop'
       targetPath: '$(Build.ArtifactStagingDirectory)'
-      publishLocation: 'Container'
+      
  
 
 
